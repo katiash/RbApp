@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%=@title%></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<!-- rendering the header partial from another "shared" folder. Notice the omission of the underscore -->
+<%= render "shared/header" %>
+<!-- rendering the params_display partial from another "shared" folder. Notice the omission of the underscore -->
+<%= render "shared/params_display"%>
+
+<body>
+<%# flash ERRORS & NOTICES: %>
+    <%# ===========================================================================================
+    <%# IN Student_Dashboard, we used the Errors object and Pluralize to Display errors one-by-one%>
+    <%# Here, we DISPLAY errors VIA flash ON all the VIEWS, IF errors EXIST %>
+
+    <%# Use .blank? to check for nil and empty:
+          @search.blank?
+    <%# For the opposite case (NOT nil or empty), use .present? :
+          @search.present? #equivalent of !@search.blank?
+    <%# === END === %>
+
+    <div style="margin: 20px; color: darkcyan">
+      <%if flash[:errors].present?%>
+        <%flash[:errors].each do |e|%>
+          <%= e %>
+        <%end%>
+      <%end%>
+      <% if flash[:notice].present?%>
+        <%flash[:notice].each do |n|%>
+          <%= n %>
+        <%end%>
+      <%end%>
+    <%# ===========================================================================================%>
+      
+      <div style = "margin-left: 640px "> 
+      <!--Can call current_user in ALL Views (and controllers) now: -->
+      <%# <h1>Welcome, <%=current_user.name _></h1> %>
+      <!--Can display other info about current_user-->
+      <!--@secrets = current_user.secrets-->
+      <!-- The "current_user" helper_method in action! -->
+        <% if current_user %> <%# ...exists: %>    
+          <form action="/sessions/<%=current_user.id%>" method="post">
+            <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Log Out">
+          </form>
+        <%end%>
+      </div><%# ======== end login button============================================================%>
+    </div><%# ======end flash ERROR & NOTICE displays=============================================================%>
+    
+    <%# THE FOLLOWING IS HOW TO PRINT TO SERVER TERMINAL FROM LAYOUT/VIEW (.ERB) FILE %>
+    <%# puts "I am printing from application html layout file (views/layouts)." %> 
+  
+    <%# YIELDS ALL THE OTHER CONTROLLER VIEWS HERE:%>
+    <%# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %>
+    <%=yield %>
+    <%# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ %>
+
+  </body>
+
+<!-- rendering the footer partial from another folder. -->
+<%= render "shared/footer"%>
+
+</html>
+
+
+<%# ---REMOVE EXTRA COMMENTS BEFORE SUBMITTING------%>
+<%# >>>>>BEGINNING COMMENT TEXT:
+<There are three main components that make up a layout file.
+
+Asset tag helpers
+Using yield and content_for
+Using partials
+
+Asset Tag Helpers:
+- These helpers are methods that generate HTML for all types of assets.
+- In total, there are 6 helpers:
+  + auto_discovery_link_tag (for RSS or Atom feeds)
+  + javascript_include_tag (linking Javascript files)
+  + stylesheet_link_tag (linking to CSS files)
+  + image_tag (linking to image files)
+  + video_tag (linking to video files)
+  + audio_tag (linking to audio files) 
+
+DEFINE YOUR OWN YIELDS:
+app/views/layouts/students.html.erb
+
+NOTE: # Replace "_>"s with the rails / ruby embedded code closing tag
+<html>
+  <head>
+
+    <!-- Dynamically add a title -->
+
+    <title><%= yield :title _></title> 
+
+<!-- Dynamically add some Javascript -->
+<script type="text/javascript">
+        <%= yield :some_javascript _>
+    </script>
+
+  </head>
+  <body>
+    <%= yield _>
+  </body>
+</html>
+
+In app/views/users/index.html.erb:
+<% content_for :title, "All Users" _>
+<% content_for :some_javascript do _>
+    alert("This alert comes from the *all users* page");
+<% end _>
+<h1>Listing all users</h1>
+<p>This is where you would have some code to display all the users</p>
+
+==========================================
+PARTIALS have a UNIQUE NAMING convention. 
+==========================================
+
+They start with an underscore (_name) to distinguish them from other views. 
+Depending on their use case, you can save them in the same folder of the name of your resource,
+or you can create a whole new folder:
+
+app/views/shared/_header.html.erb
+<header>
+    <h1>This can be a header shared by multiple views</h1>
+<header>
+
+app/views/shared/_footer.html.erb
+<footer>
+    <h1>This can be a footer shared by multiple views</h1>
+<footer>
+
+app/views/users/student_partial.html.erb
+<div>
+    <p>A paragraph that needs to be in all views for the students resource</p>
+</div>
+
+app/views/users/index.html.erb
+( Notice the omission of the underscore when used/called in views..)
+- Rendering the header partial from another folder:
+
+<%= render "shared/header" _>
+<h1>This is the index view for all the students</h1>
+
+- Rendering the student_partial from the same folder:
+<%#= render "student_partial" _>
+
+- Rendering the footer partial from another folder:
+<%= render "shared/footer" _>
+
+>>>>  ENDING COMMENT TEXT %>

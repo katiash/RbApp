@@ -1,0 +1,51 @@
+<%# content_for :title, "A Web Page - Login Page"%>
+<%#@title="New Student for #{@dojo.branch[3..-1]}"%>
+
+<%@title="Organizations Dashboard App - Login / Registration"%>
+
+<div style = "margin-left: 0px; margin-top: 20px;">
+<div style =  "display: inline-block; margin-left: 0px; margin-top: 20px; padding: 10px; width: 430px; border: 1px solid black">
+    <br><br>
+    <label for="login_form"><strong> Register:</strong> </label>
+    <form action='/users/' method='post'>
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <label for="first_name">First Name:</label>
+      <input type='text' id="first_name" name='user[first_name]' >
+      <br>
+      <label for="name">Last Name:</label>
+      <input type='text' id="last_name" name='user[last_name]' >
+      <br>
+      <label for="email">Email:</label>
+      <input type='text' id="email" name='user[email]'>
+      <br>
+      <label for="password">Password:</label>
+      <input type='password' id="password" name='user[password]'>
+      <br>
+      <input type='submit' name='submit' value='Join'>
+    </form>
+  </div>
+
+  <br><br>
+
+  <div style = "display: inline-block; vertical-align: top; margin-left: 0px; margin-top: 20px; padding: 10px; width: 400px; border: 1px solid black">
+
+    <br><br>
+    <label for="login_form"><strong> Login:</strong> </label>
+    <form action='/sessions/' method='post' id="login_form" style="border: 1px solid black; width: 300px; padding: 20px">
+      <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+      <label for="email"> Email: </label>
+      <input type='text' id="email" name='user[email]' >
+      <br>
+      <label for="password"> Password: </label>
+      <input type='password' id="password" name='user[password]'>
+      <br>
+      <input type='submit' name='submit' value='Login'>
+    </form>
+  </div>
+</div>
+
+<%#= form_tag("/search", :method => "get") do %>
+  <%#= label_tag(:q, "Search for:") %>
+  <%#= text_field_tag(:q) %>
+  <%#= submit_tag("Search") %>
+<%# end %>

@@ -1,0 +1,34 @@
+<%@title="Organizations Dashboard App - #{@group.name} "%>
+<p style = "margin-left: 720px;"><%=link_to "Dashboard", groups_path%></p>
+
+<h4><%=@group.name%></h4>
+<p> <%=@group.description%></p>
+<% if @group.users.exclude?(current_user)%>
+<%#unless @group.users.include?(current_user)%>
+    <p> <%= link_to "Join Group", memberships_path(:group => @group), :method => :post  %> </p>
+<%else%>
+    <p> <%= link_to "Leave Group", memberships_path(:group => @group) , :method => :delete %> </p>
+<%end%>
+
+<div style = "padding: 20px;">
+    <%# INSPECTING EACH SECRET FOR THEIR EXISTING LIKES...%>
+    <%#---------------------------------------------------%>
+    <%=@group.users.inspect%>
+    <%#---------------------------------------------------%>
+
+    <%if current_user == @group.user%>
+        <h5> Created By: YOU </h5>
+    <%else%>
+        <h5> Created By: <%=@group.user.first_name%> <%=@group.user.last_name%></h5>
+    <%end%>
+    
+    <h5>Members:  </h5>
+    <%if @group.users.present?%>
+        <% @group.users.each do |u| %>
+            <%=u.first_name%> <%=u.last_name%><br>
+        <%end%>
+    <%else%>
+        <p> There are no members yet in this group. </p>
+    <%end%>
+</div>
+
