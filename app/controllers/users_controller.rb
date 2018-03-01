@@ -10,10 +10,10 @@ class UsersController < ApplicationController
       flash[:notice] = ["Registration Successful! Please Login to enter the Organizations Dashboard App!"]
       redirect_to "/" #redirects to the login view, sessions controller
     else
-      flash.now[:notice] = ["User was not created. See errors below."]
+      flash.now[:notice] = ["User was not created. See errors below:"]
       puts "Errors to display to client for new user create", @user.errors.full_messages
       flash.now[:errors] = @user.errors.full_messages
-      render 'main'
+      render 'sessions/main'
     end
   end
 

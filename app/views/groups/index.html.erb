@@ -10,12 +10,15 @@
         Here are the organizations you may join:
         <%if @groups.present?%>
             <% @groups.each do |g|%>
+                <br>
                 <a href="/groups/<%=g.id%>"><%=g.name%></a>
+                <br>
                 <i>Members: <%= g.users.count%> </i>
+                <br>
                 <%=g.description%>
                 <% if current_user == g.user %>
                     <form action= "/groups/<%=g.id%>" method='post'>
-                        <input type="hidden" name="authenticity_token" value="form_authenticity_token"> 
+                        <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>"> 
                         <input type="hidden" name="_method" value="delete">                
                         <input type="submit" name="commit" value="Destroy">
                     </form>

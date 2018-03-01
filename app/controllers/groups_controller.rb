@@ -16,7 +16,9 @@ class GroupsController < ApplicationController
     if @group.save
       puts "success for group.save"
       flash[:notice] = ["Group successfully created! You have been automatically added to members' list."]
-      @membership = Membership.new(user: current_user, group: @group)
+      @membership = Membership.new(user_id: current_user.id, group: @group)
+      puts @membership.valid?
+      @membership.save
       redirect_to "/groups"
     else
       flash.now[:notice] = ["Group was not created. See errors below."]

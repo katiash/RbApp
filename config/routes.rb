@@ -13,15 +13,14 @@ Rails.application.routes.draw do
 
   get 'groups/' => "groups#index"
   post 'groups/' => "groups#create"
-  delete 'groups/:id' => "groups#destroy"
+  delete 'groups/:id' => "groups#destroy", as: "groups_destroy"
   get 'groups/:id' => "groups#show"
 
   post 'memberships' => "memberships#create"
   delete 'memberships' =>"memberships#destroy", as: 'memberships_destroy'
 
-  
   # Route Globber:
-  # match "*reset"=> redirect("/",  status: 302), via: [:all], as: 'glob', constraints: -> (req) { !(req.fullpath =~ /^\/rails\/.*/)}
+  match "*reset"=> redirect("/",  status: 302), via: [:all], as: 'glob', constraints: -> (req) { !(req.fullpath =~ /^\/rails\/.*/)}
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

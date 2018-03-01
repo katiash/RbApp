@@ -25,14 +25,15 @@
     <%# === END === %>
 
     <div style="margin: 20px; color: darkcyan">
-      <%if flash[:errors].present?%>
-        <%flash[:errors].each do |e|%>
-          <%= e %>
-        <%end%>
-      <%end%>
       <% if flash[:notice].present?%>
         <%flash[:notice].each do |n|%>
           <%= n %>
+        <%end%>
+      <%end%>
+      <br><br>
+      <%if flash[:errors].present?%>
+        <%flash[:errors].each do |e|%>
+          <%= e %>
         <%end%>
       <%end%>
     <%# ===========================================================================================%>
